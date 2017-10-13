@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+
+import javafx.scene.control.TextField;
+;
+public class Controller {
+
+	public String deleteOne(TextField display) {
+		ArrayList<Character> findSidste = new ArrayList<Character>();
+		for (char c : display.getText().toCharArray()) {
+			findSidste.add(c);
+		}
+		String tal = "";
+		findSidste.remove(findSidste.size() - 1);
+		for (int x = 0; x < findSidste.size(); x++) {
+			tal += findSidste.get(x);
+		}
+		return tal;
+	}
+
+	
+
+	double tal,tal2;
+	public String addition(TextField display) {
+
+		tal = Double.parseDouble(display.getText());
+		plus.setA(tal);
+		System.out.println(tal+"wam");
+		return "";
+
+	}
+	public String absolutLigmed(TextField display) {
+		tal2 = Double.parseDouble(display.getText());
+		plus.setB(tal);
+		
+		
+		return ""+ plus.getValue() ;
+	}
+}

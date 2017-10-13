@@ -1,0 +1,2 @@
+Math.sin(0.2);
+System.out.println();
