@@ -134,8 +134,6 @@ public class JavaFxGUI extends Application implements EventHandler<ActionEvent> 
 				index -= 1;
 			}
 		}
-		
-		
 
 		// knap 0 tilføjes til grid
 		grid.add(numbers.get(0), 1, 5);
@@ -162,140 +160,34 @@ public class JavaFxGUI extends Application implements EventHandler<ActionEvent> 
 	ArrayList<Input> inputString = new ArrayList<Input>();
 	String temp = "";
 	String temp2 = "";
+	Controller2 con2 = new Controller2();
 	// eventhandling
 	@Override
 	public void handle(ActionEvent e) {
 		Object obj = e.getSource();
 		Button button = (Button) obj;
 		String text = button.getText();
-		
-		
-		
 
 		// display.setText(display.getText() + text);
 		System.out.println(button.getText());
-//		for (int x = 0; x < 10; x++) {
-//			if (button.getText().equals("" + x)) {
-				display.setText(display.getText() + text);
-				temp = display.getText();
-				System.out.println(temp + "string");
-//			}
-//		}
+
+		display.setText(display.getText() + text);
+		temp = display.getText();
 		
+		
+		double result = con2.stringManipulation(temp);
 		
 		ArrayList<String> tempString = new ArrayList<String>();
 		
-		
 		if(button.getText().equals("=")) {
-			for(char c : temp.toCharArray()) {
-				String temp3 = "" + c; 
-				if(isInt(temp3)) {
-					temp2 += "" + c; 
-					System.out.println(temp2 + "hej");
-				}else {
-					System.out.println(temp2 + "add");
-					tempString.add(temp2);
-					tempString.add(temp3);
-					temp2 = "";
-				}
-				
-				
-				if(button.getText().equals("+")) {
-					
-				}
-			}
+			display.setText(display.getText() + result);
 		}
 		
-		if(button.getText().equals("=")) {
-			for(String s : tempString) {
-				if(button.getText().equals("+")) {
-					
-				}
-				System.out.println(s + "   " +"yay");
-			}
-			
-			
-		}
-		
-		
-		
-		temp ="";
-		temp2 ="";
-//		if (button.getText().equals(".")) {
-//			display.setText(display.getText() + text);
-//		} else if (button.getText().equals("pi")) {
-//			display.setText(String.valueOf(Math.PI));
-//		} else if (button.getText().equals("CE")) {
-//			display.setText("");
-//		} else if (button.getText().equals("S")) {
-//			display.setText(controller.deleteOne(display));
-//		} else if (button.getText().equals("+")) {
-//			saveOperator = button.getText();
-//			display.setText(controller.addition(display, plus));
-//		} else if (button.getText().equals("-")) {
-//			saveOperator = button.getText();
-//			display.setText(controller.subtraction(display, minus));
-//		} else if (button.getText().equals("*")) {
-//			saveOperator = button.getText();
-//			display.setText(controller.multiply(display, gange));
-//		} else if (button.getText().equals("/")) {
-//			saveOperator = button.getText();
-//			display.setText(controller.division(display, divider));
-//		} else if (button.getText().equals("Sin")) {
-//			saveOperator = button.getText();
-//			display.setText(controller.gSin(display,sinus));
-//		}
-//		  else if (button.getText().equals("Cos")) {
-//				saveOperator = button.getText();
-//				display.setText(controller.gCos(display,cosinus));
-//			}
-//		  else if (button.getText().equals("Tan")) {
-//				saveOperator = button.getText();
-//				display.setText(controller.gTan(display,tangens));
-//			}
-//		  else if (button.getText().equals("x^2")) {
-//				saveOperator = button.getText();
-//				display.setText(controller.iAnden(display,iAnden));
-//			}
-//		  else if (button.getText().equals("sqrtx")) {
-//				saveOperator = button.getText();
-//				display.setText(controller.sqrtx(display,sqrt));
-//			}
-//		  else if (button.getText().equals("PM")) {
-//				saveOperator = button.getText();
-//				display.setText(controller.plusMinus(display,pm));
-//			}
-//		
-//		
-//		else if (button.getText().equals("=")) {
-//			if (saveOperator.equals("+")) {
-//				display.setText(controller.ligmedBinary(display, plus));
-//			} else if (saveOperator.equals("-")) {
-//				display.setText(controller.ligmedBinary(display, minus));
-//			} else if (saveOperator.equals("*")) {
-//				display.setText(controller.ligmedBinary(display, gange));
-//			} else if (saveOperator.equals("/")) {
-//				display.setText(controller.ligmedBinary(display, divider));
-//			}
-//			
-//		}
 	}
-	
-	public Boolean isInt(String temp3) {
-		try {
-			Integer.parseInt(temp3);
-			return true;
-		}catch(NumberFormatException ex){
-			return false;
-		}
-	}
-	
+
+
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
-// besked til os selv: husk at kunne flytte med piltasterne.
-// pilletaster.
-// fix komma. Det er lort.
-//husk atan, acos
