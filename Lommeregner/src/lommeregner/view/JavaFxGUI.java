@@ -145,19 +145,6 @@ public class JavaFxGUI extends Application implements EventHandler<ActionEvent> 
 		primaryStage.show();
 	}
 
-	Controller controller = new Controller();
-	BinaryOperator plus = new Plus();
-	BinaryOperator minus = new Minus();
-	BinaryOperator gange = new Gange();
-	BinaryOperator divider = new Divider();
-	String saveOperator = "";
-	UnaryOperator sinus = new Sinus();
-	UnaryOperator cosinus = new Cosinus();
-	UnaryOperator tangens = new Tangens();
-	UnaryOperator iAnden = new Ianden();
-	UnaryOperator sqrt = new Sqrt();
-	UnaryOperator pm = new PlusMinus();
-	ArrayList<Input> inputString = new ArrayList<Input>();
 	String temp = "";
 	String temp2 = "";
 	Controller2 con2 = new Controller2();
@@ -168,24 +155,18 @@ public class JavaFxGUI extends Application implements EventHandler<ActionEvent> 
 		Button button = (Button) obj;
 		String text = button.getText();
 
-		// display.setText(display.getText() + text);
-		System.out.println(button.getText());
-
 		display.setText(display.getText() + text);
 		temp = display.getText();
-		
-		
+		/* con2.stringManipulation(temp) 
+		 * temp is the full string from the display sending it to Controller2
+		 *  the Controller2 class uses the string to get the result for the the display 
+		 */
 		double result = con2.stringManipulation(temp);
-		
-		ArrayList<String> tempString = new ArrayList<String>();
 		
 		if(button.getText().equals("=")) {
 			display.setText(display.getText() + result);
 		}
-		
 	}
-
-
 
 	public static void main(String[] args) {
 		launch(args);

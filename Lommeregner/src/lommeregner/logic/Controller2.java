@@ -3,25 +3,17 @@ package lommeregner.logic;
 import java.util.ArrayList;
 
 public class Controller2 {
-	BinaryOperator plus = new Plus();
-	BinaryOperator minus = new Minus();
-	BinaryOperator gange = new Gange();
-	BinaryOperator divider = new Divider();
-	String saveOperator = "";
-	UnaryOperator sinus = new Sinus();
-	UnaryOperator cosinus = new Cosinus();
-	UnaryOperator tangens = new Tangens();
-	UnaryOperator iAnden = new Ianden();
-	UnaryOperator sqrt = new Sqrt();
-	UnaryOperator pm = new PlusMinus();
+
 	String temp2;
-	ArrayList<String> tempString = new ArrayList<String>();
-	ArrayList<BinaryOperator> inputString = new ArrayList<BinaryOperator>();
+	double tal = 0;
+	ArrayList<Input> operatorObjects = new ArrayList<Input>();
 	ArrayList<String> numbers = new ArrayList<String>();
-	
-	
+	ArrayList<String> operators = new ArrayList<String>();
+
 	public double stringManipulation(String temp) {
-		//make a String ArrayList of the input
+		// step 1: make 2 different lists
+		// A numbers list in the order they where typed
+		// A operators list in the order they where typed
 		if (temp.contains("=")) {
 			for (char c : temp.toCharArray()) {
 				String temp3 = "" + c;
@@ -29,88 +21,53 @@ public class Controller2 {
 					temp2 += "" + c;
 				} else {
 					numbers.add(temp2);
-					tempString.add(temp2);
-					tempString.add(temp3);
+					operators.add(temp3);
 					temp2 = "";
 				}
 			}
 		}
-		//Checks which operators are needed to do the calculations of the input 
-		//and adding them to the Input ArrayList as objects
+		
+		ArrayList<Input> num = new ArrayList<Input>();
+		Input plus = new Plus();
+		num.add(plus);
+		BinaryOperator h = (BinaryOperator)num.get(0);
+		
+		
+		temp2 = "";
+		// step 2: make the operator objects ready for use
+		// Checks which operators are needed to do the calculations of the input
+		// and adding them to the Input ArrayList as objects
+		/*
+		 * makes new objects for each operator by going through the operator list adds
+		 * them in order keeps them in the order for precedence
+		 */
 		if (temp.contains("=")) {
-			for (String s : tempString) {
+			for (String s : operators) {
 				if (s.equals("+")) {
-					BinaryOperator plus = new Plus();
-					inputString.add(plus);
-				}else if(s.equals("-")) {
-					BinaryOperator minus = new Minus();
-					inputString.add(minus);
-				}else if(s.equals("*")) {
-					//BinaryOperator gange = new Gange();
-					inputString.add(new Gange());
-					System.out.print(s+"s");
+					operatorObjects.add(new Plus());
+				} else if (s.equals("-")) {
+					operatorObjects.add(new Minus());
+				} else if (s.equals("*")) {
+					operatorObjects.add(new Gange());
 				}
-				
-				//System.out.println(s);
 			}
 		}
-		int index = 0;
-		double tal = 0;
-		
-		for(Input s : inputString) {
-			System.out.println(s);
-		}
-		
-		System.out.println(inputString);
-		//precedence of operators and doing the calculations
+
+		// step 3:
+		// precedence of operators and doing the calculations by using the objects made
+		// in step 2
+		// the order in which the while loops is set determines the precedence order
 		if (temp.contains("=")) {
-		while(inputString.contains(gange)) {
-			index = inputString.indexOf(gange);
-		
-			inputString.get(index).setA(Double.parseDouble(numbers.get(index)));
-			inputString.get(index).setA(Double.parseDouble(numbers.get(index+ 1)));
-			tal = inputString.get(index).getValue();
-			System.out.println(Double.parseDouble(tempString.get(index)));
-			
+			while (operators.contains("*")) {
+				resultBinary("*");
+			}
+			while (operators.contains("+")) {
+				resultBinary("+");
+			}
 		}
-		
-		
-}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		int x = 0;
-//		if (temp.contains("=")) {
-//			for (String s : tempString) {
-//				if (s.equals("+")) {
-//					inputString.add(plus);
-//					plus.setA(Double.parseDouble(tempString.get(x)));
-//					plus.setB(Double.parseDouble(tempString.get(x+2)));
-//					System.out.println(plus.getValue());
-//					x = x+1;
-//				}else if(s.equalsIgnoreCase("-")) {
-//					inputString.add(minus);
-//				}else if(s.equalsIgnoreCase("="))
-//				System.out.println(s + "   " + "yay");
-//			}
-//
-//		}
-		temp = "";
-		temp2 = "";
 		return tal;
 	}
-	
+
 	public Boolean isInt(String temp3) {
 		try {
 			Integer.parseInt(temp3);
@@ -118,5 +75,34 @@ public class Controller2 {
 		} catch (NumberFormatException ex) {
 			return false;
 		}
+	}
+
+	// is used with step 3
+	// make sure the indexes of various ArrayLists are up to date.
+	public void resultBinary(String operator) {
+		int index = 0;
+		index = operators.indexOf(operator);
+		BinaryOperator h = (BinaryOperator)operatorObjects.get(index);
+		h.setA(Double.parseDouble(numbers.get(index)));
+		h.setB(Double.parseDouble(numbers.get(index + 1)));
+		numbers.remove(index + 1);
+		numbers.remove(index);
+		numbers.add(index, String.valueOf(operatorObjects.get(index).getValue()));
+		tal = operatorObjects.get(index).getValue();
+		operatorObjects.remove(index);
+		operators.remove(operator);
+	}
+	
+	public void resultUnary(String operator) {
+		int index = 0;
+		index = operators.indexOf(operator);
+		UnaryOperator h = (UnaryOperator)operatorObjects.get(index);
+		h.setA(Double.parseDouble(numbers.get(index)));
+		numbers.remove(index + 1);
+		numbers.remove(index);
+		numbers.add(index, String.valueOf(operatorObjects.get(index).getValue()));
+		tal = operatorObjects.get(index).getValue();
+		operatorObjects.remove(index);
+		operators.remove(operator);
 	}
 }
